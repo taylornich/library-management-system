@@ -4,6 +4,7 @@ class book:
         self.__author = author
         self.__ISBN = ISBN
         self.__pub_date = pub_date
+        self.__genre = genre
         self.__available = True
 
     def get_title(self):
@@ -26,7 +27,7 @@ class book:
         return self.__ISBN
     
     def set_ISBN(self, ISBN):
-        if not isinstance(ISBN, int) or ISBN < len(13):
+        if not (isinstance(ISBN, int) and len(ISBN) == 13):
             raise ValueError("ISBN must be a valid thirteen digit integer")
         self.__ISBN = ISBN
     
@@ -38,6 +39,15 @@ class book:
             raise ValueError("Publication date must be entered in valid integer format")
         self.__pub_date = pub_date
     
+    def get_genre(self):
+        return self.__genre
+    
+    def set_genre(self, genre):
+        if not isinstance(genre, str):
+            raise ValueError("Genre must be a vaid string")
+        self.__genre = genre
+
+
     def is_available(self):
         return self.__available
     
