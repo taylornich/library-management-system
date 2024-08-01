@@ -29,6 +29,7 @@ def mainMenu():
             genre_menu()
         elif menu_choice == '5':
             print("Quitting application")
+            break
         else:
             print("Invalid menu option")
 
