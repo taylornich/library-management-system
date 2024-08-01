@@ -25,16 +25,16 @@ class user:
         return self.__books_borrowed
     
     def books_borrowed(self, book):
-        if book.is_available:
+        if book.is_available():
             self.__books_borrowed.append(book)
-            book.is_available = False
+            book.set_available = False
         else:
             print("Sorry, book is not available")
     
     def return_book(self, book):
         if book in self.__books_borrowed:
             self.__books_borrowed.remove(book)
-            book.availability = True
+            book.set_availability = True
         else:
             print("The user did not borrow this book and therefore cannot return it.")
 
