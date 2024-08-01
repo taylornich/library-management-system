@@ -10,35 +10,44 @@ def add_book():
     author = input("Enter the author of the book: ")
     ISBN = input("Enter the ISBN: ")
     pub_date = input("Enter the publication date of the book: ")
-    book = book(title, author, ISBN, pub_date)
-    books.append(book)
-    print(f"Book, {book}, added successfully.")
+    genre = input("Enter the genre of the book: ")
+    
+    new_book = book(title, author, ISBN, pub_date, genre)
+    books[ISBN] = new_book
+    print(f"Book, {title}, added successfully.")
 
 def borrow_book():
-    book_to_borrow = input("Enter the title of the book you would like to borrow: ")
-    if book_to_borrow in books and book_to_borrow.availability: # add in books?
-        books.remove(book_to_borrow)
+    ISBN = input("Enter the ISBN of the book you would like to borrow: ")
+    if ISBN in books:
+        book = books[ISBN]
+        if book.is_available():
+            book.set_availability(False)
+            print(f"Book {book.get_title()}' borrowed successfully.")
+        else:
+            print("This book is not available to be borrowed at this time.")
     else:
-        print("This book is not available to be borrowed at this time.")
+        print("Book is not in the database.")
 
 
 def return_book():
-    book_to_return = input("Enter the title of the book you would like to return: ")
-    if book_to_return in books:
-        book = books[book_to_return]
-        if not book.is_avilable(): # Come back to fix this, need to fix availability method
+    ISBN = input("Enter the ISBN of the book you would like to return: ")
+    if ISBN in books:
+        book = books[ISBN]
+        if not book.is_available():
             book.set_availability(True)
             print(f"Book '{book.get_title()}' returned successfully.")
         else: 
             print("You did not borrow this book from the library.")
+    else: 
+        print("Book was not found in the database.")
 
 def search_book():
-    title = input("Enter the title of the book you would like to search for: ")
+    isbn = input("Enter the isbn of the book you would like to search for: ")
     found = False
     for book in books.values():
-        if book.get_title().lower == title.lower():
+        if book.get_ISBN() == isbn:
             found = True
-            print(f"Book found: Title {book.get_title()}, Author: {book.get_author()}, ISBN: {book.get_ISBN}")
+            print(f"Book found: Title {book.get_title()}, Author: {book.get_author()}, ISBN: {book.get_ISBN()}")
             break
         if not found:
             print("Book was not found in the database.")
@@ -47,6 +56,6 @@ def search_book():
 def display_books():
     if books:
         for book in books.values():
-            print(f"Title: {book.get_title()}, Author: {book.get_author()}, ISBN: {book.get_isbn()}, Genre: {book.get_genre()}, Available: {'Yes' if book.is_available() else 'No'}")
+            print(f"Title: {book.get_title()}, Author: {book.get_author()}, ISBN: {book.get_ISBN()}, Genre: {book.get_genre()}, Available: {'Yes' if book.is_available() else 'No'}")
     else:
         print("No books available at this time.")
